@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateNewsCancelComponent } from '@shared/components/create-news-cancel/create-news-cancel.component';
 
 @Component({
   selector: 'app-edit-profile',
@@ -19,8 +21,25 @@ export class EditProfileComponent implements OnInit {
     userCredo:
       'My Credo is to make small steps that leads to huge impact. Let’s change the world together.',
   };
+  private socailNetworks = [];
 
-  constructor() {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit() {}
+
+  public openCancelPopup(): void {
+    this.dialog.open(CreateNewsCancelComponent, {
+      hasBackdrop: true,
+      closeOnNavigation: true,
+      disableClose: true,
+      panelClass: 'custom-dialog-container',
+      data: {
+        currentPage: 'edit profile'
+      }
+    });
+  }
+
+  public changeLinks(data): void {
+    this.socailNetworks = [...this.socailNetworks, ...data];
+  }
 }
