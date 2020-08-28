@@ -8,7 +8,7 @@ ul {
     list-style: none;
     margin-bottom: 24px;
 
-    .link{
+    .link {
       img {
         height: 24px;
         width: 24px;
@@ -31,12 +31,12 @@ ul {
     .edit-icons {
       justify-self: end;
 
-      button{
+      button {
         border: transparent;
         background-color: transparent;
         padding: 0;
 
-        img{
+        img {
           padding-left: 18px;
         }
       }
@@ -46,8 +46,8 @@ ul {
   li:first-child {
     justify-self: start;
 
-    .link{
-      button{
+    .link {
+      button {
         border: transparent;
         background-color: transparent;
         padding: 0;
@@ -72,9 +72,9 @@ ul {
 }
 
 @media screen and (max-width: 320px) {
-  ul{
+  ul {
     li {
-      .link{
+      .link {
         img {
           margin-right: 12px;
         }
