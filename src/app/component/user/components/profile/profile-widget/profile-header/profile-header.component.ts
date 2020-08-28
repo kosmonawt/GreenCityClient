@@ -8,6 +8,7 @@ import { LocalStorageService } from '@global-service/localstorage/local-storage.
   styleUrls: ['./profile-header.component.scss'],
 })
 export class ProfileHeaderComponent implements OnInit {
+  public socialNetworksIcons = [];
   public mockedUserInfo = {
     profilePicturePath: './assets/img/profileAvatar.png',
     city: '',
@@ -17,9 +18,12 @@ export class ProfileHeaderComponent implements OnInit {
   };
   public editIcon = './assets/img/profile/icons/edit-line.svg';
   public userId: number;
-
   public userInfo;
   public isUserOnline;
+  private instagramIcon = './assets/img/profile/icons/ic-instag.svg';
+  private facebookIcon = './assets/img/profile/icons/ic-faceb.svg';
+  private facebook = 'facebook.com';
+  private instagram = 'instagram.com';
 
   constructor(private profileService: ProfileService,
               private localStorageService: LocalStorageService) { }
@@ -31,7 +35,20 @@ export class ProfileHeaderComponent implements OnInit {
   }
 
   public showUserInfo(): void {
-    this.profileService.getUserInfo().subscribe(item => this.userInfo = item);
+    this.profileService.getUserInfo().subscribe(item => {
+      this.userInfo = item;
+      this.setIcons();
+    });
+  }
+
+  private setIcons(): void {
+    this.userInfo.socialNetworks.map((elem: string) => {
+      if (elem.includes(this.facebook)) {
+        this.socialNetworksIcons = [...this.socialNetworksIcons, this.facebookIcon];
+      } else if (elem.includes(this.instagram)) {
+        this.socialNetworksIcons = [...this.socialNetworksIcons, this.instagramIcon];
+      }
+    });
   }
 
   public showCorrectImage(): string {

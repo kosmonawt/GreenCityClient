@@ -14,6 +14,7 @@ export class EditProfileFormBuilder {
       name: ['', [Validators.required, Validators.min(3), Validators.maxLength(170)]],
       city: ['', [Validators.required, Validators.minLength(3)]],
       title: ['', [Validators.required, Validators.min(3), Validators.maxLength(170)]],
+      socialNetworks: []
     });
   }
 
@@ -22,6 +23,7 @@ export class EditProfileFormBuilder {
       name: [editForm.firstName, [Validators.required, Validators.min(3), Validators.maxLength(170)]],
       city: [editForm.city, [Validators.required, Validators.minLength(3)]],
       title: [editForm.userCredo, [Validators.required, Validators.min(3), Validators.maxLength(170)]],
+      socialNetworks: [...editForm.socialNetworks]
     });
   }
 }

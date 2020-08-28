@@ -14,6 +14,11 @@ ul {
         width: 24px;
       }
 
+      a {
+        text-decoration: none;
+        color: #000;
+      }
+
       input {
         color: #494A49;
         font-family: OpenSans, sans-serif;
@@ -38,9 +43,8 @@ ul {
     }
   }
 
-  li:last-child {
+  li:first-child {
     justify-self: start;
-    margin-bottom: 0;
 
     .link{
       button{
@@ -60,6 +64,10 @@ ul {
         color: #056B33;
       }
     }
+  }
+
+  li:last-child {
+    margin-bottom: 0;
   }
 }
 

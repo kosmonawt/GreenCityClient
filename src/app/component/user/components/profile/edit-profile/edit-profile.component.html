@@ -31,7 +31,9 @@
     </div>
     <div class="wrapper">
       <p>Linked social networks</p>
-      <app-social-networks></app-social-networks>
+      <app-social-networks [socialNetworks]="socialNetworks"
+                           #social
+      ></app-social-networks>
     </div>
     <div class="wrapper">
       <p>Profile privacy</p>

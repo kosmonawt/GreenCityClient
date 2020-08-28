@@ -1,7 +1,27 @@
 <ul>
+  <li>
+    <div class="link">
+      <input type="text"
+             placeholder="Add social network"
+             #input
+      >
+      <button (click)="sendData()"
+              type="button"
+      >
+        <img src="{{icons.add}}"
+             alt="add-icon">
+      </button>
+    </div>
+  </li>
   <li *ngFor="let socialNetwork of socialNetworks">
     <div class="link">
-      <span>{{socialNetwork}}</span>
+      <a [href]="socialNetwork">
+        <img src="{{ getImagePath(socialNetwork) }}"
+             alt="network">
+      </a>
+      <a [href]="socialNetwork">
+        {{ socialNetwork }}
+      </a>
     </div>
     <div class="edit-icons">
       <button>
@@ -12,20 +32,6 @@
         <img src="{{icons.delete}}"
              alt="delete icon">
       </button>
-    </div>
-  </li>
-  <li>
-    <div class="link">
-      <button (click)="sendData()"
-              type="button"
-      >
-        <img src="{{icons.add}}"
-             alt="add-icon">
-      </button>
-      <input type="text"
-             placeholder="Add social network"
-             #input
-      >
     </div>
   </li>
 </ul>

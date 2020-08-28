@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CancelPopUpComponent } from '@shared/components/cancel-pop-up/cancel-pop-up.component';
 import { EditProfileFormBuilder } from '@global-user/components/profile/edit-profile/edit-profile-form-builder';
@@ -7,6 +7,7 @@ import { ProfileService } from '@global-user/components/profile/profile-service/
 import { EditProfileDto } from '@user-models/edit-profile.model';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import {SocialNetworksComponent} from '@global-user/components';
 
 @Component({
   selector: 'app-edit-profile',
@@ -14,6 +15,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
+  @ViewChild('social', {static: false})
+  public social: SocialNetworksComponent;
   public editProfileForm = null;
   public userInfo = {
     id: 0,
@@ -28,7 +31,7 @@ export class EditProfileComponent implements OnInit {
     userCredo:
       'My Credo is to make small steps that leads to huge impact. Let’s change the world together.',
   };
-  private socailNetworks = [];
+  public socialNetworks = [];
 
   constructor(private dialog: MatDialog,
               public builder: EditProfileFormBuilder,
@@ -69,6 +72,7 @@ export class EditProfileComponent implements OnInit {
       city: form.value.city,
       firstName: form.value.name,
       userCredo: form.value.title,
+      socialNetworks: this.social.socialNetworks,
     };
     const formData = new FormData();
     formData.append('userProfileDtoRequest ', JSON.stringify(body));
@@ -93,6 +97,6 @@ export class EditProfileComponent implements OnInit {
   }
 
   public changeLinks(data): void {
-    this.socailNetworks = [...this.socailNetworks, ...data];
+    this.socialNetworks = [...this.socialNetworks, ...data];
   }
 }
