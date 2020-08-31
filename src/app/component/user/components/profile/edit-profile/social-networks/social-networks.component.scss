@@ -9,9 +9,13 @@ ul {
     margin-bottom: 24px;
 
     .link {
+      display: flex;
+      align-items: center;
+
       img {
         height: 24px;
         width: 24px;
+        margin-right: 16px;
       }
 
       a {
