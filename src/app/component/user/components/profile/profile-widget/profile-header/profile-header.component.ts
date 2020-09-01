@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ProfileService } from '@global-user/components/profile/profile-service/profile.service';
 import { LocalStorageService } from '@global-service/localstorage/local-storage.service';
 
@@ -18,7 +18,7 @@ export class ProfileHeaderComponent implements OnInit {
   };
   public editIcon = './assets/img/profile/icons/edit-line.svg';
   public userId: number;
-  public userInfo;
+  @Input() public userInfo;
   public isUserOnline;
   private instagramIcon = './assets/img/profile/icons/ic-instag.svg';
   private facebookIcon = './assets/img/profile/icons/ic-faceb.svg';
@@ -29,8 +29,6 @@ export class ProfileHeaderComponent implements OnInit {
               private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
-    this.showUserInfo();
-    this.checkUserStatus();
     this.initUser();
   }
 
@@ -54,13 +52,6 @@ export class ProfileHeaderComponent implements OnInit {
   public showCorrectImage(): string {
     return this.userInfo.profilePicturePath ?
       this.userInfo.profilePicturePath : this.mockedUserInfo.profilePicturePath;
-  }
-
-  public checkUserStatus(): void {
-    this.profileService.getUserStatus().subscribe(item => {
-      this.isUserOnline = item;
-      this.mockedUserInfo.status = this.isUserOnline ? 'online' : 'offline';
-    });
   }
 
   private initUser(): void {

@@ -3,6 +3,11 @@ export class EditProfileModel {
   firstName: string;
   userCredo: string;
   socialNetworks: string[];
+  profilePicturePath: string;
+  rating: number | null;
+  showEcoPlace: boolean;
+  showLocation: boolean;
+  showShoppingList: boolean;
 }
 
 export class EditProfileDto {
@@ -10,5 +15,8 @@ export class EditProfileDto {
   firstName: string;
   userCredo: string;
   socialNetworks: string[];
+  showEcoPlace: boolean;
+  showLocation: boolean;
+  showShoppingList: boolean;
 }
 

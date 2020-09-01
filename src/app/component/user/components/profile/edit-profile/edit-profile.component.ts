@@ -73,7 +73,11 @@ export class EditProfileComponent implements OnInit {
       firstName: form.value.name,
       userCredo: form.value.title,
       socialNetworks: this.social.socialNetworks,
+      showLocation: form.value.showLocation,
+      showEcoPlace: form.value.showEcoPlace,
+      showShoppingList: form.value.showShoppingList
     };
+
     const formData = new FormData();
     formData.append('userProfileDtoRequest ', JSON.stringify(body));
 
