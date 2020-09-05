@@ -5,6 +5,7 @@ node_js:
 dist: bionic
 addons:
   chrome: stable
+  sonarcloud
 
 cache:
   directories:
