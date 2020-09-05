@@ -5,9 +5,6 @@ node_js:
 dist: bionic
 addons:
   chrome: stable
-  sonarcloud:
-    organization: ita-social-projects
-    projectKey: ita-social-projects-green-city-client
 
 cache:
   directories:
@@ -29,7 +26,10 @@ jobs:
       name: check styles by linter
     -
       script:
-      - sonar-scanner
+      - sonar-scanner -Dsonar.organization=ita-social-projects \
+                      -Dsonar.projectKey=ita-social-projects-green-city-client \
+                      -Dsonar.sources=. \
+                      -Dsonar.host.url=https://sonarcloud.io
       name: check by sonarcloud
     -
       script:
