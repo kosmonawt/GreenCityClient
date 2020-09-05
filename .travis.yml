@@ -29,8 +29,7 @@ jobs:
       name: check styles by linter
     -
       script:
-      - sonar-scanner -Dsonar.sources=. \
-                      -Dsonar.host.url=https://sonarcloud.io
+      - sonar-scanner -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io
       name: check by sonarcloud
     -
       script:
