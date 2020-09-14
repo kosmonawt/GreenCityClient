@@ -1,6 +1,8 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {ProfileModel} from '@user-models/profile.model';
-import {ProfileService} from '@global-user/components/profile/profile-service/profile.service';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ProfileModel } from '@user-models/profile.model';
+import { ProfileService } from '@global-user/components/profile/profile-service/profile.service';
+import { SocialNetworkModel } from '@user-models/social-network.model';
+import {EditProfileModel} from '@user-models/edit-profile.model';
 
 @Component({
   selector: 'app-social-networks',
@@ -8,15 +10,14 @@ import {ProfileService} from '@global-user/components/profile/profile-service/pr
   styleUrls: ['./social-networks.component.scss']
 })
 export class SocialNetworksComponent implements OnInit {
-  @Input() public socialNetworks = [];
+  @Input() public socialNetworks: SocialNetworkModel[] = [];
   @ViewChild('input', {static: true})
   public input: ElementRef;
   public icons = {
     edit: './assets/img/profile/icons/edit.svg',
     add: './assets/img/profile/icons/add.svg',
     delete: './assets/img/profile/icons/delete.svg',
-    instagram: './assets/img/profile/icons/ic-instag.svg',
-    facebook: './assets/img/profile/icons/ic-faceb.svg'
+    default: './assets/img/profile/icons/default_social.png'
   };
 
   constructor(private profileService: ProfileService) {}
@@ -25,19 +26,26 @@ export class SocialNetworksComponent implements OnInit {
     this.getData();
   }
 
-  private getData(): void {
-    this.profileService.getUserInfo()
-      .subscribe((data: ProfileModel) => this.socialNetworks = data.socialNetworks);
-  }
-
   public sendData(): void {
     const link = this.input.nativeElement.value;
-    if (link.indexOf('facebook.com/') >= 0 || link.indexOf('instagram.com/') >= 0) {
-      this.socialNetworks = [...this.socialNetworks, link];
-    }
+    const tempNetwork: SocialNetworkModel = {
+      id: 0,
+      socialNetworkImage: {
+        hostPath: '',
+        id: 0,
+        imagePath: this.icons.default
+      },
+      url: link
+    };
+    this.socialNetworks = [...this.socialNetworks, tempNetwork];
   }
 
-  public getImagePath(socialNetwork: string): string {
-      return socialNetwork.includes('instagram.com/') ? this.icons.instagram : this.icons.facebook;
+  public removeSocialNetwork(id: number): void {
+    this.socialNetworks = this.socialNetworks.filter((elem: SocialNetworkModel) => elem.id !== id);
+  }
+
+  private getData(): void {
+    this.profileService.getUserInfo()
+      .subscribe((data: EditProfileModel) => this.socialNetworks = data.socialNetworks);
   }
 }

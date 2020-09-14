@@ -1,5 +1,4 @@
 <ul>
-<<<<<<< HEAD
   <li>
     <div class="link">
       <input type="text"
@@ -16,30 +15,26 @@
   </li>
   <li *ngFor="let socialNetwork of socialNetworks">
     <div class="link">
-      <a href="{{socialNetwork.link}}">
-        <img src="{{socialNetwork.icon}}"
+      <a href="{{socialNetwork.url}}">
+        <img [src]="socialNetwork.socialNetworkImage.imagePath"
              alt="">
       </a>
-      <a href="{{socialNetwork.link}}">{{socialNetwork.link}}</a>
+      <a href="{{socialNetwork.url}}">{{socialNetwork.url}}</a>
     </div>
     <div class="edit-icons">
-      <button>
+      <button class="edit-btn"
+              type="button"
+      >
         <img src="{{icons.edit}}"
              alt="edit icon">
       </button>
-      <button>
+      <button class="edit-btn"
+              type="button"
+              (click)="removeSocialNetwork(socialNetwork.id)"
+      >
         <img src="{{icons.delete}}"
              alt="delete icon">
       </button>
-    </div>
-  </li>
-  <li>
-    <div class="link">
-      <button>
-        <img src="{{icons.add}}"
-             alt="add-icon">
-      </button>
-      <a>{{"user.edit-profile.add-link" | translate }}</a>
     </div>
   </li>
 </ul>

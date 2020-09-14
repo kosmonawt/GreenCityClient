@@ -11,6 +11,7 @@ import {SocialNetworksComponent} from '@global-user/components';
 import { LocalStorageService } from '@global-service/localstorage/local-storage.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import {SocialNetworkModel} from '@user-models/social-network.model';
 
 @Component({
   selector: 'app-edit-profile',
@@ -76,19 +77,23 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   }
 
   public sendFormData(form): void {
+    const socialNetworksUrls = this.social
+      .socialNetworks
+      .map((elem: SocialNetworkModel) => elem.url);
+
     const body: EditProfileDto = {
       city: form.value.city,
       firstName: form.value.name,
-      userCredo: form.value.credo,
-      socialNetworks: this.social.socialNetworks,
       showLocation: form.value.showLocation,
       showEcoPlace: form.value.showEcoPlace,
-      showShoppingList: form.value.showShoppingList
+      socialNetworks: socialNetworksUrls,
+      showShoppingList: form.value.showShoppingList,
+      userCredo: form.value.credo
     };
 
     const formData = new FormData();
     formData.append('userProfileDtoRequest ', JSON.stringify(body));
-
+    console.log(JSON.stringify(body));
     this.editProfileService.postDataUserProfile(formData).subscribe(
       () => {
         this.router.navigate(['profile', this.profileService.userId]);

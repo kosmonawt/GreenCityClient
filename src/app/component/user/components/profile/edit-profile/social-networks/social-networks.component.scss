@@ -35,10 +35,11 @@ ul {
     .edit-icons {
       justify-self: end;
 
-      button {
+      .edit-btn {
         border: transparent;
         background-color: transparent;
         padding: 0;
+        outline: none;
 
         img {
           padding-left: 18px;
