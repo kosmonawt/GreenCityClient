@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CancelPopUpComponent } from '@shared/components/cancel-pop-up/cancel-pop-up.component';
 import { EditProfileFormBuilder } from '@global-user/components/profile/edit-profile/edit-profile-form-builder';
@@ -8,16 +8,20 @@ import { EditProfileDto } from '@user-models/edit-profile.model';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import {SocialNetworksComponent} from '@global-user/components';
+import { LocalStorageService } from '@global-service/localstorage/local-storage.service';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.scss']
 })
-export class EditProfileComponent implements OnInit {
+export class EditProfileComponent implements OnInit, OnDestroy {
   @ViewChild('social', {static: false})
   public social: SocialNetworksComponent;
   public editProfileForm = null;
+  private langChangeSub: Subscription;
   public userInfo = {
     id: 0,
     avatarUrl: './assets/img/profileAvatarBig.png',
@@ -33,22 +37,26 @@ export class EditProfileComponent implements OnInit {
   };
   public socialNetworks = [];
 
-  constructor(private dialog: MatDialog,
+  constructor(public dialog: MatDialog,
               public builder: EditProfileFormBuilder,
               private editProfileService: EditProfileService,
               private profileService: ProfileService,
-              private router: Router) {}
+              private router: Router,
+              private localStorageService: LocalStorageService,
+              private translate: TranslateService) {}
 
   ngOnInit() {
     this.setupInitialValue();
     this.getInitialValue();
+    this.subscribeToLangChange();
+    this.bindLang(this.localStorageService.getCurrentLanguage());
   }
 
   private setupInitialValue() {
     this.editProfileForm = this.builder.getProfileForm();
   }
 
-  private getInitialValue(): void {
+  public getInitialValue(): void {
     this.profileService.getUserInfo().pipe(
       take(1)
     )
@@ -71,7 +79,7 @@ export class EditProfileComponent implements OnInit {
     const body: EditProfileDto = {
       city: form.value.city,
       firstName: form.value.name,
-      userCredo: form.value.title,
+      userCredo: form.value.credo,
       socialNetworks: this.social.socialNetworks,
       showLocation: form.value.showLocation,
       showEcoPlace: form.value.showEcoPlace,
@@ -102,5 +110,18 @@ export class EditProfileComponent implements OnInit {
 
   public changeLinks(data): void {
     this.socialNetworks = [...this.socialNetworks, ...data];
+  }
+
+  private bindLang(lang: string): void {
+    this.translate.setDefaultLang(lang);
+  }
+
+  private subscribeToLangChange(): void {
+    this.langChangeSub = this.localStorageService.languageSubject
+      .subscribe((lang) => this.bindLang(lang));
+  }
+
+  ngOnDestroy(): void {
+    this.langChangeSub.unsubscribe();
   }
 }
