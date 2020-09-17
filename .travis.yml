@@ -31,7 +31,10 @@ jobs:
       name: check styles by linter
     -
       script:
-      - sonar-scanner -Dsonar.projectKey=ita-social-projects-green-city-client -Dsonar.host.url=https://sonarcloud.io -Dsonar.sources=. -Dsonar.qualitygate.wait=true
+      - sonar-scanner -Dsonar.projectKey=ita-social-projects-green-city-client \
+        -Dsonar.host.url=https://sonarcloud.io \
+        -Dsonar.sources=. 
+        -Dsonar.qualitygate.wait=true
       name: check by sonarcloud
     -
       script:
