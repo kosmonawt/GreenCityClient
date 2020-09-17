@@ -31,7 +31,7 @@ jobs:
       name: check styles by linter
     -
       script:
-      - sonar-scanner -Dsonar.projectKey=ita-social-projects-green-city-client
+      - ls -la && sonar-scanner -Dsonar.projectKey=ita-social-projects-green-city-client
         -Dsonar.host.url=https://sonarcloud.io
         -Dsonar.sources=src
         -Dsonar.exclusions=**/node_modules/**
@@ -42,7 +42,7 @@ jobs:
       name: check by sonarcloud
     -
       script:
-      - ng test --watch=false --progress=false --codeCoverage=true --browsers=ChromeHeadless
+      - ng test --watch=false --progress=false --codeCoverage=true --browsers=ChromeHeadless && ls -la
       name: test app
     -
       script:
