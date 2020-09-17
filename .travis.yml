@@ -11,6 +11,7 @@ addons:
 cache:
   directories:
     - node_modules
+    - coverage
 
 install:
   - npm install
@@ -42,7 +43,7 @@ jobs:
       name: check by sonarcloud
     -
       script:
-      - ng test --watch=false --progress=false --codeCoverage=true --browsers=ChromeHeadless && ls -la
+      - ng test --watch=false --progress=false --codeCoverage=true --browsers=ChromeHeadless
       name: test app
     -
       script:
