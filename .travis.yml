@@ -32,7 +32,7 @@ jobs:
       name: check by sonarcloud
     -
       script:
-      - ng test --watch=false --progress=false --browsers=ChromeHeadless
+      - ng test --watch=false --progress=false --codeCoverage=true --browsers=ChromeHeadless
       name: test app
     -
       script:
