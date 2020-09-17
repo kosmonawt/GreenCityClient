@@ -18,7 +18,7 @@ install:
 jobs:
   
   allow_failures:
-    - name: check styles by linter
+    - name: check by sonarcloud
 
   include:
     - stage: build
