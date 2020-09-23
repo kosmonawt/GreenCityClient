@@ -24,7 +24,6 @@ import {
 } from './components';
 import { EcoNewsEffects } from './store/eco-news.effects';
 import { EcoNewsSelectors } from './store/eco-news.selectors';
-import { CommentsModule } from '../comments/comments.module';
 import { NoNewsComponent } from './components/no-news/no-news.component';
 import { MatSnackBarComponent } from './../errors/mat-snack-bar/mat-snack-bar.component';
 import { EcoNewsComponent } from './eco-news.component';
@@ -50,13 +49,11 @@ import { EcoNewsComponent } from './eco-news.component';
   imports: [
     EffectsModule.forFeature([EcoNewsEffects]),
     CommonModule,
-    CommentsModule,
     SharedModule,
     InfiniteScrollModule,
     EcoNewsRoutingModule,
     ImageCropperModule,
     MatSnackBarModule,
-    CommentsModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
