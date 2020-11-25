@@ -82,6 +82,7 @@ $bp-largest: 1440px;
       line-height: 16px;
       color: #494a49;
       text-align: center;
+      transition: 0.2s ease-in-out;
 
       // .calendar-grid-day {
       //   cursor: pointer;
@@ -109,6 +110,35 @@ $bp-largest: 1440px;
         background-repeat: no-repeat;
         background-position: center;
         color: #fff;
+      }
+
+      .enrolled-day {
+        background-color: #13AA57;
+        color: #494a49;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 50%;
+      }
+
+      .unenrolled-day {
+        background-color:  #E1E5E3;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 50%;
+      }
+
+      .enrolled2-day {
+        border: 1px solid #13AA57;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 50%;
+      }
+
+      .unenrolled2-day {
+        border: 1px solid  #D0D0D0;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 50%;
       }
 
       // .current-day:hover,
