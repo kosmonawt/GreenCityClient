@@ -21,9 +21,23 @@ export class CalendarComponent extends CalendarBaseComponent implements OnInit, 
   public formatedData: string;
   public isChangingEnroll: boolean = false;
   public isHabitListEditable: boolean;
+  public isHabitChecked: boolean;
   public currentDate: number = new Date().getDate();
   public habits2: any[] = [];
-  public habits = [];
+  public habits = [
+    {
+      enrolledDates: ['2020-11-25', '2020-11-26']
+    },
+    {
+      enrolledDates: ['2020-11-20', '2020-11-21', '2020-11-22', '2020-11-23']
+    },
+    {
+      enrolledDates: ['2020-11-25', '2020-11-26', '2020-11-27', '2020-11-28']
+    },
+    {
+      enrolledDates: ['2020-11-25', '2020-11-26', '2020-11-27']
+    }
+  ];
 
   @HostListener('document:click', ['$event']) clickout(event) {
     this.isHabitsPopUpOpen =  this.isHabitsPopUpOpen ? false : null;
@@ -75,9 +89,26 @@ export class CalendarComponent extends CalendarBaseComponent implements OnInit, 
 
   public toggleCompleteHabit(habit) {
     console.log(`habitid:${habit.id} and formdata:${this.formatedData} and completed${habit.completed}`);
-    habit.completed = !habit.completed;
-    this.isChangingEnroll = true;
-    setTimeout(() => this.isChangingEnroll = false, 1000);
+    this.isHabitChecked = habit.completed;
+    // this.isChangingEnroll = true;
+    // setTimeout(() => this.isChangingEnroll = false, 1000);
+  }
+
+  public checkIfEnrolledDate() {
+    this.habits.forEach( habit => {
+      console.log(habit.enrolledDates.filter( date => {
+        return date === this.formatedData;
+      }));
+    })
+  }
+
+  public toggleCompleteHabitHandler(habit) {
+    if(!this.isChangingEnroll){
+      habit.completed = !habit.completed;
+      console.log(`habitid:${habit.id} and formdata:${this.formatedData} and completed${habit.completed}`);
+      console.log("left!");
+    }
+    this.checkIfEnrolledDate();
   }
 
 }
