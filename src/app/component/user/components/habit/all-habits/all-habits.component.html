@@ -40,7 +40,7 @@
             </app-habits-list-view>
         </div>
     </div>
-    <app-spinner *ngIf="isFetching"></app-spinner>
+    <app-spinner class="spinner" *ngIf="isFetching"></app-spinner>
     <div infiniteScroll
         [infiniteScrollDistance]="0"
         [infiniteScrollThrottle]="500"

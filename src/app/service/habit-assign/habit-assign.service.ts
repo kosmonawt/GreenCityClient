@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { mainLink } from '../../links';
 
 import { HabitAssignDto } from 'src/app/model/habit/HabitAssignDto';
+import { map } from 'rxjs/operators';
 // import { HabitStatusDto } from 'src/app/model/habit/';
 // import { HabitCalendarDto } from 'src/app/model/habit/';
 
@@ -13,28 +14,25 @@ import { HabitAssignDto } from 'src/app/model/habit/HabitAssignDto';
   providedIn: 'root'
 })
 export class HabitAssignService {
+
+  private habits: BehaviorSubject<HabitAssignDto[]> = new BehaviorSubject([]);
+
   apiUrl = `${mainLink}/habit/assign`;
   userId: number;
-
-  private $habitStatus = new BehaviorSubject<any[]>([]);
-
-  private dataStore : {
-    habitStatus: any[]
-  } =
-  {
-    habitStatus: []
-  }
-
-  readonly habitStatus = this.$habitStatus.asObservable();
 
   constructor(private http: HttpClient, private localStorageService: LocalStorageService) {
     localStorageService.userIdBehaviourSubject.subscribe(userId => this.userId = userId);
   }
 
+  getActiveHabitAssigns(language: string): Observable<HabitAssignDto[]> {
+    return this.http.get<HabitAssignDto[]>(`${this.apiUrl}?lang=${language}`).pipe(
+      map( habits => habits.sort((habit1, habit2) => (habit1.id > habit2.id) ? 1 : -1))
+    );
+  }
+
   getActiveDateHabits(date: string, language: string): Observable<HabitAssignDto[]> {
-    console.log(language)
-    return this.http.get<HabitAssignDto[]>(
-      `${this.apiUrl}/active/${date}?lang=${language}`
+    return this.http.get<HabitAssignDto[]>(`${this.apiUrl}/active/${date}?lang=${language}`).pipe(
+      map( habits => habits.sort((habit1, habit2) => (habit1.id > habit2.id) ? 1 : -1))
     );
   }
 
@@ -49,7 +47,7 @@ export class HabitAssignService {
       id: habitId,
       date: date
     };
-    return this.http.post(`${this.apiUrl}/${habitId}/enroll/`, this.habitStatus);
+    return this.http.post(`${this.apiUrl}/${habitId}/enroll/${date}`, body);
   }
 
   unenrollHabitForSpecificDate(habitId: number, date: string){
@@ -63,6 +61,6 @@ export class HabitAssignService {
       id: habitId,
       date: date
     };
-    return this.http.post(`${this.apiUrl}/${habitId}/unenroll/${date}`, this.habitStatus);
+    return this.http.post(`${this.apiUrl}/${habitId}/unenroll/${date}`, body);
   }
 }

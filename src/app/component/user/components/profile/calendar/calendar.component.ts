@@ -12,36 +12,21 @@ import { HabitAssignService } from '@global-service/habit-assign/habit-assign.se
 })
 export class CalendarComponent extends CalendarBaseComponent implements OnInit, OnDestroy {
   public isHabitsPopUpOpen = false;
-  public selectedDay;
-  public habitsCalendarSelectedDate;
+  public selectedDay: number;
+  public habitsCalendarSelectedDate: string;
   public calendarIcons = calendarIcons;
-  public userHabitAssigns;
-  public habitEnrollDates;
   public isDayTracked: boolean;
   public formatedData: string;
-  public isChangingEnroll: boolean = false;
   public isHabitListEditable: boolean;
-  public isHabitChecked: boolean;
-  public currentDate: number = new Date().getDate();
-  public habits2: any[] = [];
-  public habits = [
-    {
-      enrolledDates: ['2020-11-25', '2020-11-26']
-    },
-    {
-      enrolledDates: ['2020-11-20', '2020-11-21', '2020-11-22', '2020-11-23']
-    },
-    {
-      enrolledDates: ['2020-11-25', '2020-11-26', '2020-11-27', '2020-11-28']
-    },
-    {
-      enrolledDates: ['2020-11-25', '2020-11-26', '2020-11-27']
-    }
-  ];
+  public isHabitEnrolled: boolean;
+  public currentDate: Date = new Date();
+  public habits2: any[];
+  public daysCanEditHabits: number = 7;
+  public isFetching: boolean;
+
 
   @HostListener('document:click', ['$event']) clickout(event) {
-    this.isHabitsPopUpOpen =  this.isHabitsPopUpOpen ? false : null;
-    this.isDayTracked = false;
+    this.closePopUp();
   }
 
   constructor(public translate: TranslateService,
@@ -57,58 +42,81 @@ export class CalendarComponent extends CalendarBaseComponent implements OnInit, 
   }
 
   public getFormatedData(dayItem) {
-    console.log(dayItem);
     this.formatedData = `${dayItem.year}-${ dayItem.month + 1 < 10 ? "0" + dayItem.month : dayItem.month + 1}-${dayItem.numberOfDate < 10 ? "0" + dayItem.numberOfDate : dayItem.numberOfDate}`;
   }
 
-  public toggleHabitsList(dayItem) {
-      this.checkHabitListEditable(dayItem);
-      this.getFormatedData(dayItem);
-      this.getActiveDateHabits(this.formatedData);
-      this.isHabitsPopUpOpen = !this.isHabitsPopUpOpen;
-      this.selectedDay = dayItem.numberOfDate;
-      this.habitsCalendarSelectedDate = this.months[dayItem.month] + " " + dayItem.numberOfDate + ", " + dayItem.year;
-      this.isDayTracked = !this.isDayTracked; 
+  public checkIfFuture(dayItem) {
+    this.getFormatedData(dayItem);
+    if (this.currentDate.setHours(0, 0, 0, 0) >= new Date(this.formatedData).setHours(0, 0, 0, 0)) {
+      this.toggleHabitsList(dayItem);
+    }
   }
 
-  public checkHabitListEditable(dayItem) {
+  public toggleHabitsList(dayItem) {
+    this.isFetching = true;
+    this.isHabitsPopUpOpen = !this.isHabitsPopUpOpen;
+    this.checkHabitListEditable();
+    this.getActiveDateHabits(this.formatedData);
+    this.selectedDay = dayItem.numberOfDate;
+    this.habitsCalendarSelectedDate = this.months[dayItem.month] + " " + dayItem.numberOfDate + ", " + dayItem.year;
+    this.isDayTracked = !this.isDayTracked;
+  }
+
+  public checkHabitListEditable() {
     this.isHabitListEditable = false;
-    if(this.currentDate - 7 <= dayItem.numberOfDate && dayItem.numberOfDate <= this.currentDate) {
+    if(this.currentDate.setHours(0, 0, 0, 0) - this.daysCanEditHabits * 24 * 60 * 60 * 1000 <= new Date(this.formatedData).setHours(0, 0, 0, 0)) {
       this.isHabitListEditable = true;
     }
   }
 
   public getActiveDateHabits(date) {
+    this.habits2 = [];
     this.habitAssignService.getActiveDateHabits(date, this.language).subscribe( data => {
-      this.habits2 = [];
-      data.forEach(item => {
-        this.habits2 = [...this.habits2, item.habit];
+      this.habits2 = [...data];
+      this.habits2.forEach(habit => {
+        habit.enrolled = this.checkIfEnrolledDate(habit);
       });
-    })
+      this.isFetching = false;
+    });
   }
 
-  public toggleCompleteHabit(habit) {
-    console.log(`habitid:${habit.id} and formdata:${this.formatedData} and completed${habit.completed}`);
-    this.isHabitChecked = habit.completed;
-    // this.isChangingEnroll = true;
-    // setTimeout(() => this.isChangingEnroll = false, 1000);
+  public enrollHabit(habit) {
+    this.habitAssignService.enrollHabitForSpecificDate(habit.habit.id, this.formatedData);
   }
 
-  public checkIfEnrolledDate() {
-    this.habits.forEach( habit => {
-      console.log(habit.enrolledDates.filter( date => {
-        return date === this.formatedData;
-      }));
-    })
+  public unEnrollHabit(habit) {
+    this.habitAssignService.unenrollHabitForSpecificDate(habit.habit.id, this.formatedData);
   }
 
-  public toggleCompleteHabitHandler(habit) {
-    if(!this.isChangingEnroll){
-      habit.completed = !habit.completed;
-      console.log(`habitid:${habit.id} and formdata:${this.formatedData} and completed${habit.completed}`);
-      console.log("left!");
-    }
-    this.checkIfEnrolledDate();
+  public toggleEnrollHabit(habit) {
+    this.isHabitListEditable ? habit.enrolled = !habit.enrolled : null
   }
 
+  public sendEnrollRequest() {
+    this.habits2.forEach(habit => {
+      if(habit.enrolled !== this.checkIfEnrolledDate(habit)) {
+        habit.enrolled ? this.enrollHabit(habit) : this.unEnrollHabit(habit);
+      }
+    });
+  }
+
+  public checkIfEnrolledDate(habit) {
+    this.isHabitEnrolled = false;
+    habit.habitStatusCalendarDtoList.forEach(date => {
+      if (date.enrollDate === this.formatedData) {
+        this.isHabitEnrolled = true;
+      }
+    });
+    return this.isHabitEnrolled;
+  }
+
+  public markCalendarDays(habit) {
+    
+  }
+
+  public closePopUp(){
+    this.isHabitsPopUpOpen = this.isHabitsPopUpOpen ? false : null;
+    this.isDayTracked = false;
+    this.sendEnrollRequest();
+  }
 }

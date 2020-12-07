@@ -321,10 +321,10 @@ $bp-largest: 1440px;
           color: #fff;
         }
 
-        // .current-day:hover,
-        // .tracked-day:hover {
-        //   color: #fff;
-        // }
+        .current-day:hover,
+        .tracked-day:hover {
+          color: #fff;
+        }
 
         // .current-day:active,
         // .tracked-day:active {
@@ -368,8 +368,9 @@ $bp-largest: 1440px;
   position: relative;
   z-index: 10;
   margin-right: 314px;
+  padding-bottom: 5px;
   width: 314px;
-  height: 334px;
+  min-height: 52px;
   right: 297px;
   top: 3px;
 
@@ -436,6 +437,14 @@ $bp-largest: 1440px;
   height: 100%;
 }
 
+.spinner {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .calendar-grid-day-content:hover {
   color: #13aa57;
 }
@@ -449,7 +458,10 @@ $bp-largest: 1440px;
   color: #fff;
 }
 
-.calendar-grid-current-day-content:active,
+.calendar-grid-current-day-content:active {
+  color: #fff;
+}
+
 .calendar-grid-tracked-day-content:active {
-  color: #056b33;
+  color: #fff;
 }
