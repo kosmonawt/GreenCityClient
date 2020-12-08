@@ -182,13 +182,7 @@
     "start": "начало:",
     "end": "конец:",
     "submit": "Подтвердить",
-    "close": "Закрыть",
-    "notifications": {
-      "exists": "Уже существует",
-      "closeTime": "Время закрытия должно быть позже времени открытия. Пожалуйста, попробуйте еще раз",
-      "breakTime": "Недействительное время перерыва",
-      "photoUpload": "Загружайте только PNG или JPEG. Размер файла не должен превышать 10MB"
-    }
+    "close": "Закрыть"
   },
   "places": {
     "places": "Места",
@@ -644,7 +638,6 @@
     }
   },
   "about-us": {
-    "disabled-link": "Эта страница в процессе разработки",
     "intro": {
       "block-1": {
         "header": "О нас",
@@ -688,7 +681,7 @@
   },
   "post-news-loader": {
     "text-1": "Please wait while loading...",
-    "text-2": "Your news is loading to website. Please wait until page refresh."
+    "text-2": "Your news is loading to the website. Please wait until the page refreshes"
   },
   "cancel-popup": {
     "title": "Все изменения будут потеряны.",
@@ -725,7 +718,6 @@
   },
   "create-news": {
     "title": "Создать новость",
-    "edit-title": "Редактировать новость",
     "form-description": "Пожалуйста, укажите как можно подробнее время и место мероприятия, цель собрания и т.п. Вы можете изменить новость в любое время после публикации.",
     "news-title": "Название",
     "title-placeholder": "напр. Кофе с собой со скидкой 20%",
@@ -752,8 +744,7 @@
     "author-name": "Текущий Пользователь",
     "cancel-button": "Выйти",
     "preview-button": "Просмотреть",
-    "publish-button": "Опубликовать",
-    "edit-button": "Редактировать"
+    "publish-button": "Опубликовать"
   },
   "drag-and-drop": {
     "picture-description": "Перетяните изображение сюда или",
