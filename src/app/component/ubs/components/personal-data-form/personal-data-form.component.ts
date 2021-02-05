@@ -82,7 +82,7 @@ export class PersonalDataFormComponent implements OnInit {
       firstName: this.personalData.firstName,
       lastName: this.personalData.lastName,
       email: this.personalData.email,
-      phoneNumber: this.personalData.phoneNumber,
+      phoneNumber: '+38 0' + this.personalData.phoneNumber,
       city: this.personalData.city,
       district: this.personalData.district,
       streetAndBuilding: this.personalData.street + ', ' + this.personalData.houseNumber,
@@ -142,5 +142,4 @@ export class PersonalDataFormComponent implements OnInit {
     };
     console.log({personalData});
   }
-
 }

@@ -56,7 +56,7 @@
       <div class="col-12 col-sm-6 form-group">
         <label>Місто</label>
         <select formControlName="city" class="shadow-none form-control" disabled>
-          <option value="Kyiv">Київ</option>
+          <option value="Київ">Київ</option>
         </select>
         <div class="w-100 city-notice">
           На даний момент обслуговуємо лише м.Київ
@@ -67,6 +67,7 @@
         <input 
           formControlName="district"
           class="shadow-none form-control"
+          placeholder=""
           matGoogleMapsAutocomplete
           [country]="'ua'"
           [types]="['geocode']"
@@ -87,6 +88,7 @@
           type="text" 
           class="shadow-none form-control"
           matGoogleMapsAutocomplete
+          placeholder=""
           (onAutocompleteSelected)="onAutocompleteSelected($event)"
           (onLocationSelected)="onLocationSelected($event)"
           (change)="onChange()"

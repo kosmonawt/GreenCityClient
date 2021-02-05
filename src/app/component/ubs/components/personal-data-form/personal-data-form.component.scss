@@ -1,8 +1,17 @@
 ::ng-deep {
   .pac-container  {
+
+    &::after {
+      display: none;
+    }
+
    .pac-item {
       padding: 0 0 0 10px;
       height: 32px;
+
+      span {
+        color: #444e55;
+      }
 
       .pac-item-query {
         color: #444e55;
@@ -12,6 +21,10 @@
         background-color: var(--primary-green);
 
         .pac-item-query {
+          color: #fff;
+        }
+
+        span {
           color: #fff;
         }
       }
@@ -25,7 +38,6 @@
 
 input, textarea, select {
   border: 1px solid #64727D;
-  border-radius: 0;
   padding: 0 0 0 24px;
   color: #1D2830;
 }
@@ -101,4 +113,8 @@ label, .adress-title, .adress-notice, .comment-title, .city-notice {
 
 .btn:nth-child(1) {
   margin: 0 24px 0 0;
+}
+
+.btn.primary-global-button:hover {
+  color: #fff;
 }
