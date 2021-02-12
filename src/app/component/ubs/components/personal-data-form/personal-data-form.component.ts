@@ -124,11 +124,14 @@ export class PersonalDataFormComponent implements OnInit {
   }
 
   submit(): void {
+    const phoneField = this.personalDataForm.get('phoneNumber');
+    const phoneValue = `${phoneField.value[6]}${phoneField.value[7]}${phoneField.value[10]}${phoneField.value[11]}${phoneField.value[12]}${phoneField.value[14]}${phoneField.value[15]}${phoneField.value[17]}${phoneField.value[18]}`;
+    
     const personalData: PersonalData = {
       firstName: this.personalDataForm.get('firstName').value,
       lastName: this.personalDataForm.get('lastName').value,
       email: this.personalDataForm.get('email').value,
-      phoneNumber: this.personalDataForm.get('phoneNumber').value,
+      phoneNumber: phoneValue,
       city: this.personalDataForm.get('city').value,
       district: this.personalDataForm.get('district').value,
       street: this.personalDataForm.get('streetAndBuilding').value.split(', ')[0],
@@ -136,7 +139,8 @@ export class PersonalDataFormComponent implements OnInit {
       houseCorpus: this.personalDataForm.get('houseCorpus').value,
       entranceNumber: this.personalDataForm.get('entranceNumber').value,
       addressComment: this.personalDataForm.get('addressComment').value,
-      id: this.personalData.id,
+      // id: this.personalData.id,
+      id: 1,
       latitude: this.latitude,
       longitude: this.longitude
     };
